@@ -9,3 +9,6 @@ WORKDIR /home/jovyan
 
 # Copy the lock file into the container
 COPY conda-linux-64.lock .
+
+# Install packages from the lock file using mamba
+RUN mamba install --yes --file conda-linux-64.lock
