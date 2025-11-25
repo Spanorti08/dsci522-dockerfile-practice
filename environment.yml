@@ -1,0 +1,8 @@
+name: docker522
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pandas=2.1.4
+  - numpy=1.26.4
+prefix: /Users/yusongyang/miniforge3/envs/docker522
