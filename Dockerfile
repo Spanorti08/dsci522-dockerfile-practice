@@ -1,14 +1,15 @@
-# Start from the Jupyter team's minimal-notebook image
+# Start from the Jupyter minimal-notebook image
 FROM quay.io/jupyter/minimal-notebook:afe30f0c9ad8
 
-# Run container as notebook user (standard for Jupyter images)
-USER ${NB_UID}
+# Switch to root to be able to install packages
+USER root
 
-# Set working directory inside the container
-WORKDIR /home/jovyan
-
-# Copy the lock file into the container
-COPY conda-linux-64.lock .
+# Copy the Linux lock file into the image
+COPY conda-linux-64.lock /tmp/conda-linux-64.lock
 
 # Install packages from the lock file using mamba
-RUN mamba install --yes --file conda-linux-64.lock
+RUN mamba install --yes --file /tmp/conda-linux-64.lock && \
+    mamba clean --all -f -y
+
+# Switch back to the default notebook user
+USER ${NB_UID}
